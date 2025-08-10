@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      minlength: [3, "Name must be at least 3 characters long"],
     },
     email: {
       type: String,
@@ -25,7 +26,7 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: 6,
+      minlength: [6, "Password must be at least 6 characters long"],
       trim: true,
       match: [
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,}$/,
