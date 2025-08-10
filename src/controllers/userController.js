@@ -10,9 +10,9 @@ const registerUser = async (req, res) => {
     }
 
     const result = await userService.registerUser({ name, email, password });
-    res.status(201).json(result);
+    res.status(201).json({ message: result.message });
   } catch (error) {
-    res.status(500).json({ message: "Error registering user", error });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -25,9 +25,9 @@ const loginUser = async (req, res) => {
     }
 
     const result = await userService.loginUser({ email, password });
-    res.status(200).json(result);
+    res.status(200).json({ message: result.message });
   } catch (error) {
-    res.status(500).json({ message: "Error logging in user", error });
+    res.status(500).json({ message: error.message });
   }
 };
 

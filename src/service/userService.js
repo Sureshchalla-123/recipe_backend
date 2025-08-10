@@ -16,7 +16,7 @@ const userService = {
 
       return { message: "User registered successfully", user };
     } catch (error) {
-      throw new Error("Error registering user");
+      return { message: error.message };
     }
   },
   loginUser: async (userData) => {
@@ -35,7 +35,7 @@ const userService = {
 
       return { message: "User logged in successfully", user };
     } catch (error) {
-      throw new Error("Error logging in user");
+      return { message: error.message };
     }
   },
 };

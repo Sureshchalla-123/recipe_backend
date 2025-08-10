@@ -1,6 +1,7 @@
 const { time } = require("console");
 const { type } = require("os");
-const bcrypt = require(bcrypt);
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
   {
