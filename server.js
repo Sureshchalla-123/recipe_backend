@@ -2,6 +2,7 @@ const express = require("express");
 const connectDB = require("./src/config/db");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const routes = require("./src/routes/routes.js");
 
 dotenv.config();
 const app = express();
@@ -11,6 +12,8 @@ app.use(express.json());
 app.get("/healthcheck", (req, res) => {
   res.status(200).json({ message: "server is running smoothly" });
 });
+
+app.use("/api/v1", routes);
 
 app.listen(process.env.PORT, async () => {
   try {
