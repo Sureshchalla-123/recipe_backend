@@ -1,9 +1,12 @@
 const express = require("express");
 const connectDB = require("./src/config/db");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 app.get("/healthcheck", (req, res) => {
   res.status(200).json({ message: "server is running smoothly" });
