@@ -1,6 +1,8 @@
 const User = require("../models/userModel");
 const userService = require("../service/userService");
 const validateUser = require("../utils/validateUser");
+const { authMiddleware } = require("../middleware/auth");
+const { generateToken } = require("../utils/generateToken");
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -35,8 +37,21 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    if (!validateUser.isValidEmail(email)) {
+      return res.status(400).json({ message: "Email not valid" });
+    }
+    if (!validateUser.isValidPassword(password)) {
+      return res.status(400).json({ message: "Password not valid" });
+    }
+
     const result = await userService.loginUser({ email, password });
-    res.status(200).json({ message: result.message });
+
+    if (!result.user) {
+      return res.status(404).json(result);
+    }
+
+    const jwt_token = generateToken(result.user);
+    res.status(200).json({ message: result.message, token: jwt_token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
