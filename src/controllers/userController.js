@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const userService = require("../service/userService");
+const validateUser = require("../utils/validateUser");
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -7,6 +8,16 @@ const registerUser = async (req, res) => {
   try {
     if (!name || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (!validateUser.isValidEmail(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+
+    if (!validateUser.isValidPassword(password)) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters long" });
     }
 
     const result = await userService.registerUser({ name, email, password });
